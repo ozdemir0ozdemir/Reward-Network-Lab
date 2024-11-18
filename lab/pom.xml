@@ -175,7 +175,6 @@
         <!-- Section: Spring Essentials -->
         <!-- Day 1 -->
         <module>10-spring-intro</module>
-        <module>10-spring-intro-solution</module>
         <module>12-javaconfig-dependency-injection</module>
         <module>12-javaconfig-dependency-injection-solution</module>
         <module>16-annotations</module>
