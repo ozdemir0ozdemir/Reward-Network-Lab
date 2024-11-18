@@ -2,6 +2,7 @@ package rewards.internal.monitor.jamon;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
 import rewards.internal.monitor.GlobalMonitorStatistics;
 import rewards.internal.monitor.Monitor;
 import rewards.internal.monitor.MonitorFactory;
