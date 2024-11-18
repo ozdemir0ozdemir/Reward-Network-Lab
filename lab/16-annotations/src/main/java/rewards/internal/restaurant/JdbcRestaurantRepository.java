@@ -1,8 +1,12 @@
 package rewards.internal.restaurant;
 
 import common.money.Percentage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +22,7 @@ import java.util.Map;
  * cache should be populated on initialization and cleared on destruction.
  */
 
-/* TODO-06: Let this class to be found in component-scanning
+/*
  * - Annotate the class with an appropriate stereotype annotation
  *   to cause component-scanning to detect and load this bean.
  * - Inject dataSource. Use constructor injection in this case.
@@ -27,7 +31,7 @@ import java.util.Map;
  */
 
 /*
- * TODO-08: Use Setter injection for DataSource
+ *
  * - Change the configuration to set the dataSource
  *   property using setDataSource().
  *
@@ -43,7 +47,7 @@ import java.util.Map;
  *   understand why. (If not, refer to lab document).
  *   We will fix this error in the next step.
  */
-
+@Repository
 public class JdbcRestaurantRepository implements RestaurantRepository {
 
 	private DataSource dataSource;
@@ -68,6 +72,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	public JdbcRestaurantRepository() {
 	}
 
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
@@ -83,7 +88,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 */
 
 	/*
-	 * TODO-09: Make this method to be invoked after a bean gets created
+	 *
 	 * - Mark this method with an annotation that will cause it to be
 	 *   executed by Spring after constructor & setter initialization has occurred.
 	 * - Re-run the RewardNetworkTests test. You should see the test succeeds.
@@ -91,7 +96,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 *   construction activity, so using a post-construct, rather than
 	 *   the constructor, is a better practice.
 	 */
-
+	@PostConstruct
 	void populateRestaurantCache() {
 		restaurantCache = new HashMap<String, Restaurant>();
 		String sql = "select MERCHANT_NUMBER, NAME, BENEFIT_PERCENTAGE from T_RESTAURANT";
@@ -155,10 +160,10 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 * Helper method that clears the cache of restaurants.
 	 * This method should be called when a bean is destroyed.
 	 *
-	 * TODO-10: Add a scheme to check if this method is being invoked
+	 *
 	 * - Add System.out.println to this method.
 	 *
-	 * TODO-11: Have this method to be invoked before a bean gets destroyed
+	 *
 	 * - Re-run RewardNetworkTests.
 	 * - Observe this method is not called.
 	 * - Use an appropriate annotation to register this method for a
@@ -166,8 +171,10 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 * - Re-run the test and you should be able to see
 	 *   that this method is now being called.
 	 */
+	@PreDestroy
 	public void clearRestaurantCache() {
 		restaurantCache.clear();
+		System.out.println(":::::::::::::: LOG | DEBUG | Restaurant Cache Cleaned ::::::::::::::");
 	}
 
 	/**
