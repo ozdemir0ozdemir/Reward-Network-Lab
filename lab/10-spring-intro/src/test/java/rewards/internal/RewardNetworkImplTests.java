@@ -44,8 +44,6 @@ public class RewardNetworkImplTests {
 		rewardNetwork = new RewardNetworkImpl(accountRepo, restaurantRepo, rewardRepo);
 	}
 
-	// TODO-10: Test RewardNetworkImpl class
-	// - Remove the @Disabled annotation below.
 	// - Run this JUnit test. Verify it passes.
 	@Test
 	//@Disabled
