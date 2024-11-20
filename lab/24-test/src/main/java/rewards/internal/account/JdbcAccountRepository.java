@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,7 @@ import common.money.Percentage;
  * Loads accounts from a data source using the JDBC API.
  */ 
 @Repository
+@Profile("jdbc")
 public class JdbcAccountRepository implements AccountRepository {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
