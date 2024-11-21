@@ -5,13 +5,13 @@ import common.money.Percentage;
 import rewards.Dining;
 import rewards.internal.account.Account;
 
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  * Restaurants calculate how much benefit may be awarded to an account for
  * dining based on a availability policy and a benefit percentage.
  */
-// TODO-05: Map this class using JPA Annotations.
+// 5: Map this class using JPA Annotations.
 // - Use the following SQL statement in the schema.sql as a guidance.
 //
 // create table T_RESTAURANT (ID integer identity primary key,
@@ -19,17 +19,25 @@ import javax.persistence.Transient;
 //                            NAME varchar(80) not null,
 //                            BENEFIT_PERCENTAGE decimal(5,2) not null,
 //                            BENEFIT_AVAILABILITY_POLICY varchar(1) not null, unique(MERCHANT_NUMBER));
+
+@Entity
+@Table(name = "T_RESTAURANT")
 public class Restaurant {
 
+	@Id
+	@Column(name= "ID")
 	private Long entityId;
 
+	@Column(name= "MERCHANT_NUMBER", unique = true)
 	private String number;
 
+	@Column(name= "NAME")
 	private String name;
 
 	// This is not a simple mapping as Percentage is not a simple type.
 	// You need to map Percentage.value from a column in T_RESTAURANT.  If unsure,
 	// look at how Beneficiary does it.
+	@AttributeOverride(name = "value", column = @Column(name = "BENEFIT_PERCENTAGE"))
 	private Percentage benefitPercentage;
 
 

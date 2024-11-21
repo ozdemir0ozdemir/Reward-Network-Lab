@@ -192,7 +192,6 @@
         <module>30-jdbc-boot-solution</module>
         <module>32-jdbc-autoconfig</module>
         <module>34-spring-data-jpa</module>
-        <module>34-spring-data-jpa-solution</module>
         <module>36-mvc</module>
         <module>36-mvc-solution</module>
         

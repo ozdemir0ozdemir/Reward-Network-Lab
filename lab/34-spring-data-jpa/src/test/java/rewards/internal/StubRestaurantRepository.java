@@ -21,7 +21,7 @@ import common.money.Percentage;
  * in expensive and/or complex dependencies such as a Database. Simple unit tests can then verify object behavior by
  * considering the state of this stub.
  */
-public class StubRestaurantRepository implements RestaurantRepository {
+public class StubRestaurantRepository  {
 
 	private Map<String, Restaurant> restaurantsByMerchantNumber = new HashMap<String, Restaurant>();
 

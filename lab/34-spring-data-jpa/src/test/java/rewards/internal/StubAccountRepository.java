@@ -18,7 +18,7 @@ import common.money.Percentage;
  * in expensive and/or complex dependencies such as a Database. Simple unit tests can then verify object behavior by
  * considering the state of this stub.
  */
-public class StubAccountRepository implements AccountRepository {
+public class StubAccountRepository  {
 
 	private Map<String, Account> accountsByCreditCard = new HashMap<String, Account>();
 
@@ -29,7 +29,8 @@ public class StubAccountRepository implements AccountRepository {
 		accountsByCreditCard.put("1234123412341234", account);
 	}
 
-	public Account findByCreditCard(String creditCardNumber) {
+
+	public Account findByCreditCardNumber(String creditCardNumber) {
 		Account account = accountsByCreditCard.get(creditCardNumber);
 		if (account == null) {
 			throw new ObjectRetrievalFailureException(Account.class, creditCardNumber);

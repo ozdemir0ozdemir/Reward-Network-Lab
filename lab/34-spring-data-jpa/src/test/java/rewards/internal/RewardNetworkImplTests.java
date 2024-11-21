@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import common.money.MonetaryAmount;
+import org.springframework.beans.factory.annotation.Autowired;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -29,15 +30,27 @@ public class RewardNetworkImplTests {
 	 */
 	private RewardNetworkImpl rewardNetwork;
 
+	@Autowired
+	private AccountRepository accountRepository;
+
+	@Autowired
+	private RestaurantRepository restaurantRepository;
+
+	@Autowired
+	private RewardRepository rewardRepository;
+
 	@BeforeEach
 	public void setUp() throws Exception {
 		// create stubs to facilitate fast in-memory testing with dummy data and no external dependencies
-		AccountRepository accountRepo = new StubAccountRepository();
-		RestaurantRepository restaurantRepo = new StubRestaurantRepository();
-		RewardRepository rewardRepo = new StubRewardRepository();
+//		AccountRepository accountRepo = new StubAccountRepository();
+//		RestaurantRepository restaurantRepo = new StubRestaurantRepository();
+//		RewardRepository rewardRepo = new StubRewardRepository();
 
 		// setup the object being tested by handing what it needs to work
-		rewardNetwork = new RewardNetworkImpl(accountRepo, restaurantRepo, rewardRepo);
+		rewardNetwork = new RewardNetworkImpl(
+				accountRepository,
+				restaurantRepository,
+				rewardRepository);
 	}
 
 	@Test

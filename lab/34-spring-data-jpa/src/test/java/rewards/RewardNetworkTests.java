@@ -25,7 +25,7 @@ public class RewardNetworkTests {
 	@Autowired
 	private RewardNetwork rewardNetwork;
 
-	// TODO-08 Run this test (if running with Gradle, make sure to remove the test exclusion in the build.gradle file.
+	// 08 Run this test (if running with Gradle, make sure to remove the test exclusion in the build.gradle file.
 	//  It should pass.
 	@Test
 	public void testRewardForDining() {

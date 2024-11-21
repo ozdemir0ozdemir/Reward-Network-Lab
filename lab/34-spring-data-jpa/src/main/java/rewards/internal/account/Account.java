@@ -19,7 +19,7 @@ import java.util.Set;
  * 
  * An entity. An aggregate.
  */
-//	TODO-02: Review the JPA annotations on this class and make sure you know what each does.
+//	02: Review the JPA annotations on this class and make sure you know what each does.
 //	@Entity - Marks this class as a JPA persistent class
 //	@Table - Specifies the exact table name to use on the DB (would be "Account" if unspecified).
 //	@Id - Indicates the field to use as the primary key on the database
