@@ -184,7 +184,6 @@
         <module>22-aop</module>
         <module>24-test</module>
         <module>26-jdbc</module>
-        <module>26-jdbc-solution</module>
         <module>28-transactions</module>
         <module>28-transactions-solution</module>
 
