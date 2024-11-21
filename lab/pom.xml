@@ -193,8 +193,7 @@
         <module>32-jdbc-autoconfig</module>
         <module>34-spring-data-jpa</module>
         <module>36-mvc</module>
-        <module>36-mvc-solution</module>
-        
+
         <!-- Day 4 -->
         <module>38-rest-ws</module>
         <module>38-rest-ws-solution</module>
