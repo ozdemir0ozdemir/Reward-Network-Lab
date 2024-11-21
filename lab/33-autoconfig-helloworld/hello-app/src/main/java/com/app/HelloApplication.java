@@ -1,37 +1,41 @@
 package com.app;
 
+import com.config.MyOwnConfig;
 import com.lib.HelloService;
+import com.lib.TypicalHelloService;
+import com.starter.HelloAutoConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
-// TODO-10: Go to TO-DO-10 in the setting.gradle file (Gradle)
+// 10: Go to TO-DO-10 in the setting.gradle file (Gradle)
 //          or in the root pom.xml (Maven)
-// TODO-11: Go to TO-DO-11 in the same file
+// 11: Go to TO-DO-11 in the same file
 
 // ------------------------------------------
 
-// TODO-13: Go to TO-DO-13 in the build.gradle (Gradle) or
+// 13: Go to TO-DO-13 in the build.gradle (Gradle) or
 //          pom.xml (Maven) of the "hello-app" project
 
 // ------------------------------------------
 
-// TODO-20: Now we are ready to leverage "hello-starter" project.
+// 20: Now we are ready to leverage "hello-starter" project.
 // First, we want to configure "TypicalHelloService" bean
 // via "hello-starter" project instead of directly from
 // "hello-lib" project.
 //
-// TODO-21: Comment out the explicit @Bean configuration you just
+// 21: Comment out the explicit @Bean configuration you just
 //          added in the previous step (TO-DO-16 below in this class)
 //
-// TODO-22: Go to TO-DO-22 in the build.gradle (Gradle) or
+// 22: Go to TO-DO-22 in the build.gradle (Gradle) or
 //          pom.xml (Maven) of the "hello-app" project
 
 // ------------------------------------------
 
 //
-// TODO-25: Import the configuration class of "hello-starter"
+// 25: Import the configuration class of "hello-starter"
 // - Add @Import({HelloAutoConfig.class})
 // - Run the application
 // - Note that The "HelloService" bean ("TypicalHelloService") is
@@ -39,7 +43,7 @@ import org.springframework.context.annotation.Bean;
 //   At this point, "hello-starter" is nothing more than
 //   a library. It does not perform any auto-configuration yet.
 //
-// TODO-26: Now we are going to define application provided HelloService bean
+// 26: Now we are going to define application provided HelloService bean
 // - Create "MyOwnHelloService" Bean under "com.app" directory
 // - Create new configuration class called
 //   "MyOwnConfig" under "com.config" package
@@ -71,53 +75,54 @@ import org.springframework.context.annotation.Bean;
 
 // ------------------------------------------ 
 
-// TODO-30: Now we would like to change the behavior through
+// 30: Now we would like to change the behavior through
 //          auto-configuration so that the
 //          "TypicalHelloService" gets configured only when the
 //          application did not provide its "HelloService" bean.
 //
-// TODO-31: Remove "HelloAutoConfig.class" from @Import statement
+// 31: Remove "HelloAutoConfig.class" from @Import statement
 //          So now the import statement should look like
 //          @Import({MyOwnConfig.class})
 //
-// TODO-32: Go to TO-DO-32 in the
+// 32: Go to TO-DO-32 in the
 //          src/main/resources/META-INF/spring.factories file
 //          of the "hello-starter" project
 
 // ------------------------------------------
 
-// TODO-35: Run the application again and see which one wins
+// 35: Run the application again and see which one wins
 //          This time, "MyOwnHelloService" bean should win.
 //
-// TODO-36: In the console, search for "HelloAutoConfig" and
+// 36: In the console, search for "HelloAutoConfig" and
 //          see how auto-configuration is performed.
 //          You should see the one positive match and one negative match.
 //
-// TODO-37: Comment out @Import statement and run the application
+// 37: Comment out @Import statement and run the application
 //          and observe that "TypicalHelloService" bean wins.
 //          (If it does not work, please do "./mvnw clean install"
 //           or "./gradlew clean build" in a terminal window,
 //           then run the application again.)
 //
-// TODO-38: In the console, search for "HelloAutoConfig" and
+// 38: In the console, search for "HelloAutoConfig" and
 //          see how auto-configuration is performed.
 //          This time, you should see the two positive matches.
 
 @SpringBootApplication
+//@Import({MyOwnConfig.class})
 public class HelloApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(HelloApplication.class, args);
     }
 
-    // TODO-14: Review CommandLineRunner code below
+    // 14: Review CommandLineRunner code below
     //          in which you are going to say greeting via
     //          injected HelloService
 
-    // TODO-15: Run this application and you will experience a
+    // 15: Run this application and you will experience a
     //          failure of "'HelloService' that could not be found"
 
-    // TODO-16: Fix the problem (add @Bean definition of "HelloService"
+    // 16: Fix the problem (add @Bean definition of "HelloService"
     //          with Bean id "helloService") and run it again,
     //          verify it works.
     //
@@ -126,7 +131,12 @@ public class HelloApplication {
     public CommandLineRunner commandLineRunner(HelloService helloService) {
 
         return args -> helloService.greet();
-
     }
+
+//    @Bean
+//    HelloService helloService() {
+//        return new TypicalHelloService();
+//    }
+
 
 }

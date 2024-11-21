@@ -19,7 +19,7 @@
                   Note that it has dependency on "hello-lib" project -->
         <dependency>
             <groupId>io.spring.training.core-spring</groupId>
-            <artifactId>hello-lib</artifactId>
+            <artifactId>hello-starter</artifactId>
         </dependency>
 
         <!-- TO-DO-22: Replace hello-lib above with hello-starter -->

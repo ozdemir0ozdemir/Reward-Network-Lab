@@ -4,4 +4,4 @@
 #          to the right of the equal(=) sign
 #          Now Spring Boot will use "com.starter.HelloAutoConfig"
 #          as part of its auto-configuration.
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.starter.HelloAutoConfig
