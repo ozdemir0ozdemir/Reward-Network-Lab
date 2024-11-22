@@ -2,6 +2,9 @@ package accounts.web;
 
 import accounts.AccountManager;
 import common.money.Percentage;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ import java.util.List;
  * A controller handling requests for CRUD operations on Accounts and their
  * Beneficiaries.
  *
- * TODO-11: Access the new "/metrics/account.fetch" metric
+ * 11: Access the new "/metrics/account.fetch" metric
  * - Let the application get restarted via devtools
  * - Access "/metrics" endpoint, and verify the presence of "account.fetch" metric
  * - Access some accounts (i.e. http://localhost:8080/accounts/1)
@@ -33,46 +36,51 @@ public class AccountController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private AccountManager accountManager;
+	private final AccountManager accountManager;
 
-	// TODO-08: Add a Micrometer Counter
+	private final MeterRegistry meterRegistry;
+
+	// 08: Add a Micrometer Counter
 	// - Inject a MeterRegistry through constructor injection
 	//   (Modify the existing constructor below)
 	// - Create a Counter from the MeterRegistry: name the counter "account.fetch"
 	//   with a tag of "type"/"fromCode" key/value pair
 	@Autowired
-	public AccountController(AccountManager accountManager) {
+	public AccountController(AccountManager accountManager, MeterRegistry meterRegistry) {
 		this.accountManager = accountManager;
+		this.meterRegistry = meterRegistry;
 	}
 
 	/**
 	 * Provide a list of all accounts.
 	 *
-     * TODO-12: Add Timer metric
+     * 12: Add Timer metric
 	 * - Add @Timed annotation to this method
      * - Set the metric name to "account.timer"
      * - Set a extra tag with "source"/"accountSummary" key/value pair
 	 */
+	@Timed(value = "account.timer", extraTags = {"source","accountSummary"})
 	@GetMapping(value = "/accounts")
 	public List<Account> accountSummary() {
+		logger.debug("Logging message within accountSummary()");
 		return accountManager.getAllAccounts();
 	}
 
 	/**
 	 *
-	 *  TODO-09: Increment the Counter each time "accountDetails" method below is called.
+	 *  09: Increment the Counter each time "accountDetails" method below is called.
      *  - Add code to increment the counter
 	 *
 	 * ----------------------------------------------------
 	 *
-     *  TODO-13: Add Timer metric
+     *  13: Add Timer metric
 	 *  - Add @Timed annotation to this method
      *  - Set the metric name to "account.timer"
      *  - Set extra tag with "source"/"accountDetails" key/value pair
 	 */
+	@Timed(value = "account.timer",  extraTags = {"source","accountSummary"})
 	@GetMapping(value = "/accounts/{id}")
 	public Account accountDetails(@PathVariable int id) {
-
 		return retrieveAccount(id);
 	}
 

@@ -23,22 +23,21 @@ public class RestaurantHealthCheckTest {
 	public void setUp() {
 		restaurantRepository = mock(JpaRestaurantRepository.class);
 
-		// TODO-16b: Test custom health indicator
+		// 16b: Test custom health indicator
 		// - Create an instance of RestaurantHealthCheck class
 		// - Remove the two @Disabled annotations below
 		// - Run the test, make sure it passes.
-		restaurantHealthCheck = null;
+		restaurantHealthCheck = new RestaurantHealthCheck(restaurantRepository);
 	}
 
 	@Test
-	@Disabled
 	public void testHealthReturnsUpIfThereAreRestaurants() {
 		// Mock the Repository so getRestaurantCount returns 1
 		doReturn(1L).when(restaurantRepository).getRestaurantCount();
 
-		// TODO-15a: Invoke the health() method on RestaurantHealthCheck object
+		// 15a: Invoke the health() method on RestaurantHealthCheck object
 		// (You will write health() method in the next step)
-		Health result = null;
+		Health result = this.restaurantHealthCheck.health();
 
 		// Health check should return UP
 		verify(restaurantRepository).getRestaurantCount();
@@ -46,14 +45,13 @@ public class RestaurantHealthCheckTest {
 	}
 
 	@Test
-	@Disabled
 	public void testHealthReturnsDownIfThereAreNoRestaurants() {
 		// Mock the Repository so getRestaurantCount returns 0
 		doReturn(0L).when(restaurantRepository).getRestaurantCount();
 
-		// TODO-15b: Invoke the health() method on RestaurantHealthCheck object
+		// 15b: Invoke the health() method on RestaurantHealthCheck object
 		// (You will write health() method in the next step)
-		Health result = null;
+		Health result = this.restaurantHealthCheck.health();
 
 		// Health check should return DOWN
 		verify(restaurantRepository).getRestaurantCount();
