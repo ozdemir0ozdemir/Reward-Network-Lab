@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// TODO-06a: Perform security testing against MVC layer
+// 06a: Perform security testing against MVC layer
 // - Take some time to understand what each test is for
 // - Remove @Disabled annotation from each test and run it
 // - Make sure all tests pass
@@ -46,17 +46,15 @@ public class AccountControllerTests {
     private AccountService accountService;
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"INVALID"})
     void accountSummary_with_invalid_role_should_return_403() throws Exception {
 
         mockMvc.perform(get("/accounts"))
-               .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    @Disabled
-    @WithMockUser( roles = {"USER"})
+    @WithMockUser(roles = {"USER"})
     public void accountDetails_with_USER_role_should_return_200() throws Exception {
 
         // arrange
@@ -64,9 +62,9 @@ public class AccountControllerTests {
 
         // act and assert
         mockMvc.perform(get("/accounts/0"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
 
         // verify
         verify(accountManager).getAccount(0L);
@@ -74,7 +72,6 @@ public class AccountControllerTests {
     }
 
     @Test
-    @Disabled
     @WithMockUser(username = "user", password = "user")
     public void accountDetails_with_user_credentials_should_return_200() throws Exception {
 
@@ -83,9 +80,9 @@ public class AccountControllerTests {
 
         // act and assert
         mockMvc.perform(get("/accounts/0"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
 
         // verify
         verify(accountManager).getAccount(0L);
@@ -93,7 +90,6 @@ public class AccountControllerTests {
     }
 
     @Test
-    @Disabled
     @WithMockUser(username = "admin", password = "admin")
     public void accountDetails_with_admin_credentials_should_return_200() throws Exception {
 
@@ -102,9 +98,9 @@ public class AccountControllerTests {
 
         // act and assert
         mockMvc.perform(get("/accounts/0"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
 
         // verify
         verify(accountManager).getAccount(0L);
@@ -112,7 +108,6 @@ public class AccountControllerTests {
     }
 
     @Test
-    @Disabled
     @WithMockUser(username = "superadmin", password = "superadmin")
     public void accountDetails_with_superadmin_credentials_should_return_200() throws Exception {
 
@@ -121,10 +116,10 @@ public class AccountControllerTests {
 
         // act and assert
         mockMvc.perform(get("/accounts/0"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe"))
-               .andExpect(jsonPath("number").value("1234567890"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("John Doe"))
+                .andExpect(jsonPath("number").value("1234567890"));
 
         // verify
         verify(accountManager).getAccount(0L);
@@ -132,7 +127,6 @@ public class AccountControllerTests {
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"USER"})
     public void accountDetailsFail_test_with_USER_role_should_proceed_successfully() throws Exception {
 
@@ -140,14 +134,13 @@ public class AccountControllerTests {
                 .willThrow(new IllegalArgumentException("No such account with id " + 0L));
 
         mockMvc.perform(get("/accounts/0"))
-               .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
 
         verify(accountManager).getAccount(any(Long.class));
 
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"ADMIN"})
     public void accountSummary_with_ADMIN_role_should_return_200() throws Exception {
 
@@ -155,17 +148,16 @@ public class AccountControllerTests {
         given(accountManager.getAllAccounts()).willReturn(testAccounts);
 
         mockMvc.perform(get("/accounts"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("$..number").value("123456789"))
-               .andExpect(jsonPath("$..name").value("John Doe"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$..number").value("123456789"))
+                .andExpect(jsonPath("$..name").value("John Doe"));
 
         verify(accountManager).getAllAccounts();
 
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"ADMIN", "SUPERADMIN"})
     public void createAccount_with_ADMIN_or_SUPERADMIN_role_should_return_201() throws Exception {
 
@@ -174,16 +166,16 @@ public class AccountControllerTests {
         given(accountManager.save(any(Account.class))).willReturn(testAccount);
 
         mockMvc.perform(post("/accounts")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(asJsonString(testAccount)))
-               .andExpect(status().isCreated())
-               .andExpect(header().string("Location", "http://localhost/accounts/21"));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(testAccount)))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", "http://localhost/accounts/21"));
 
         verify(accountManager).save(any(Account.class));
 
     }
 
-    // TODO-06b: Write a test that verifies that a user with "USER" role
+    // 06b: Write a test that verifies that a user with "USER" role
     //          is not permitted to perform POST operation
     // - Use the code above (in the previous test) as a guidance
     //   but without using "given" and "verify" methods.
@@ -191,14 +183,24 @@ public class AccountControllerTests {
     //    this testing because security failure will prevent
     //    calling a method of a dependency.)
     @Test
+    @WithMockUser(roles = {"USER"})
     public void createAccount_with_USER_role_should_return_403() throws Exception {
+        Account account = new Account("123456789", "FreeCodeCampRadio");
+        account.setEntityId(247L);
 
+        given(accountManager.save(account))
+                .willReturn(account);
 
+        mockMvc.perform(post("/accounts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(account)))
+                .andExpect(status().isForbidden());
 
+        verify(accountManager, never()).save(any(Account.class));
+        verifyNoInteractions(accountManager);
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"SUPERADMIN"})
     public void getBeneficiary_with_SUPERADMIN_role_should_return_200() throws Exception {
 
@@ -207,35 +209,32 @@ public class AccountControllerTests {
         given(accountManager.getAccount(0L)).willReturn(account);
 
         mockMvc.perform(get("/accounts/{accountId}/beneficiaries/{beneficiaryName}", 0L, "Corgan"))
-               .andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("Corgan"))
-               .andExpect(jsonPath("allocationPercentage").value("0.1"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("Corgan"))
+                .andExpect(jsonPath("allocationPercentage").value("0.1"));
 
         verify(accountManager).getAccount(0L);
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"ADMIN", "SUPERADMIN"})
     public void addBeneficiary_with_ADMIN_or_SUPERADMIN_role_should_return_201() throws Exception {
 
         mockMvc.perform(post("/accounts/{entityId}/beneficiaries", 0L).content("Kate"))
-               .andExpect(status().isCreated())
-               .andExpect(header().string("Location", "http://localhost/accounts/0/beneficiaries/Kate"));
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", "http://localhost/accounts/0/beneficiaries/Kate"));
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"USER"})
     public void addBeneficiary_with_USER_role_should_return_403() throws Exception {
 
         mockMvc.perform(post("/accounts/{entityId}/beneficiaries", 0L).content("Kate"))
-               .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"SUPERADMIN"})
     public void removeBeneficiary_with_SUPERADMIN_role_should_return_204() throws Exception {
 
@@ -244,14 +243,13 @@ public class AccountControllerTests {
         given(accountManager.getAccount(0L)).willReturn(account);
 
         mockMvc.perform(delete("/accounts/{entityId}/beneficiaries/{name}", 0L, "Corgan"))
-               .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent());
 
         verify(accountManager).getAccount(0L);
 
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"USER", "ADMIN"})
     public void removeBeneficiary_with_USER_or_ADMIN_role_should_return_403() throws Exception {
 
@@ -260,19 +258,18 @@ public class AccountControllerTests {
         given(accountManager.getAccount(0L)).willReturn(account);
 
         mockMvc.perform(delete("/accounts/{entityId}/beneficiaries/{name}", 0L, "Corgan"))
-               .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden());
 
     }
 
     @Test
-    @Disabled
     @WithMockUser(roles = {"SUPERADMIN"})
     public void removeBeneficiaryFail_test_with_SUPERADMIN_role_should_proceed_successfully() throws Exception {
         Account account = new Account("1234567890", "John Doe");
         given(accountManager.getAccount(0L)).willReturn(account);
 
         mockMvc.perform(delete("/accounts/{entityId}/beneficiaries/{name}", 0L, "Noname"))
-               .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
 
         verify(accountManager).getAccount(0L);
     }
@@ -282,7 +279,8 @@ public class AccountControllerTests {
             final ObjectMapper mapper = new ObjectMapper();
             final String jsonContent = mapper.writeValueAsString(obj);
             return jsonContent;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

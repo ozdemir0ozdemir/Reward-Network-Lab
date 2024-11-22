@@ -25,7 +25,7 @@ import accounts.services.AccountService;
 import config.RestSecurityConfig;
 import rewards.internal.account.Account;
 
-// TODO-16 (Optional): Perform security testing for the two users added
+// 16 (Optional): Perform security testing for the two users added
 //          through custom UserDetailsService
 // - Take some time to understand what each test is for
 // - Remove @Disabled annotation from each test and run it
@@ -45,7 +45,6 @@ public class AccountControllerCustomUserDetailsServiceTests {
     private AccountService accountService;
 
     @Test
-    @Disabled
     @WithUserDetails("joe")
     public void accountDetails_with_joe_credentials_should_return_200() throws Exception {
 
@@ -63,7 +62,6 @@ public class AccountControllerCustomUserDetailsServiceTests {
     }
 
     @Test
-    @Disabled
     @WithUserDetails("mary")
     public void accountDetails_with_mary_credentials_should_return_200() throws Exception {
 
