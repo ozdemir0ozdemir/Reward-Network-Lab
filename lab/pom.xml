@@ -196,7 +196,6 @@
 
         <!-- Day 4 -->
         <module>38-rest-ws</module>
-        <module>38-rest-ws-solution</module>
         <module>40-boot-test</module>
         <module>40-boot-test-solution</module>
         <module>42-security-rest</module>
